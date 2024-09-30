@@ -139,6 +139,14 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
+    "rollup": {
+      "name": "rollup",
+      "steps": [
+        {
+          "exec": "rollup -c --bundleConfigAsCjs"
+        }
+      ]
+    },
     "test": {
       "name": "test",
       "description": "Run tests",
@@ -159,13 +167,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,ts-node,react,react-dom,web-vitals"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@rollup/plugin-commonjs,@rollup/plugin-node-resolve,@rollup/plugin-terser,@rollup/plugin-typescript,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,prettier,projen,react,rollup,rollup-plugin-dts,rollup-plugin-peer-deps-external,rollup-plugin-postcss,ts-node,tslib,react-dom,web-vitals"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts ts-node typescript react react-dom web-vitals"
+          "exec": "yarn upgrade @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-terser @rollup/plugin-typescript @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint prettier projen react react-scripts rollup rollup-plugin-dts rollup-plugin-peer-deps-external rollup-plugin-postcss ts-node tslib typescript react-dom web-vitals"
         },
         {
           "exec": "npx projen"
