@@ -146,10 +146,8 @@
       "error",
       {
         "devDependencies": [
-          "**/test/**",
-          "**/build-tools/**",
-          ".projenrc.ts",
-          "projenrc/**/*.ts"
+          "**/src/**/*.test.tsx",
+          "**/src/setupTests.ts"
         ],
         "optionalDependencies": false,
         "peerDependencies": true

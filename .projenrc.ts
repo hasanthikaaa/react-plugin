@@ -1,5 +1,5 @@
-import { typescript } from 'projen';
-const project = new typescript.TypeScriptProject({
+import { web } from 'projen';
+const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'react-plugin',
   projenrcTs: true,
