@@ -42,14 +42,6 @@
       ],
       "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
     },
-    "bump-version": {
-      "name": "bump-version",
-      "steps": [
-        {
-          "exec": "npm version patch"
-        }
-      ]
-    },
     "bundle": {
       "name": "bundle",
       "description": "Prepare assets",
