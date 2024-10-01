@@ -36,6 +36,8 @@ const project = new web.ReactTypeScriptProject({
   },
 });
 
+const packageJson = project.tryFindObjectFile('package.json');
+packageJson?.addOverride('version', '0.0.1');
 
 project.bundler.addBundle('src/index.ts', {
   target: 'esnext',
@@ -87,12 +89,27 @@ const versionUpdateStep = {
   run: 'npm version patch -m "ci: bump version to %s"',
 };
 
+const addPackageJsonFile = {
+  name: 'Add package.json',
+  run: 'git add package.json',
+};
+
+const commitPackageJsonFile = {
+  name: 'Commit package.json',
+  run: 'git commit -m "ci: bump version"',
+};
+
+const pushPackageJsonfile = {
+  name: 'Push package.json',
+  run: 'git push origin main',
+};
+
 const releaseWorkflow = project.tryFindObjectFile(
   '.github/workflows/release.yml',
 );
 
 releaseWorkflow?.patch(
-  JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
+  JsonPatch.add('/jobs/release/steps/3', [versionUpdateStep, addPackageJsonFile, commitPackageJsonFile, pushPackageJsonfile]),
 );
 
 project.synth();
