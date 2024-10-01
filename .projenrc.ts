@@ -1,4 +1,4 @@
-import { JsonFile, JsonPatch, web } from 'projen';
+import { JsonFile, web } from 'projen';
 import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
 
@@ -34,6 +34,7 @@ const project = new web.ReactTypeScriptProject({
     workflows: true,
     projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: 'PROJEN_TOKEN' }),
   },
+  package: true,
 });
 
 
@@ -82,17 +83,17 @@ new JsonFile(project, 'tsconfig.json', {
   },
 });
 
-const versionUpdateStep = {
-  name: 'Bump version',
-  run: 'npm version patch',
-};
-
-const releaseWorkflow = project.tryFindObjectFile(
-  '.github/workflows/release.yml',
-);
-
-releaseWorkflow?.patch(
-  JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
-);
+// const versionUpdateStep = {
+//   name: 'Bump version',
+//   run: 'npm version patch',
+// };
+//
+// const releaseWorkflow = project.tryFindObjectFile(
+//   '.github/workflows/release.yml',
+// );
+//
+// releaseWorkflow?.patch(
+//   JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
+// );
 
 project.synth();
