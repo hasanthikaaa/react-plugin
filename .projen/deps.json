@@ -1,22 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "@rollup/plugin-commonjs",
-      "type": "build"
-    },
-    {
-      "name": "@rollup/plugin-node-resolve",
-      "type": "build"
-    },
-    {
-      "name": "@rollup/plugin-terser",
-      "type": "build"
-    },
-    {
-      "name": "@rollup/plugin-typescript",
-      "type": "build"
-    },
-    {
       "name": "@testing-library/dom",
       "type": "build"
     },
@@ -70,10 +54,6 @@
       "type": "build"
     },
     {
-      "name": "esbuild",
-      "type": "build"
-    },
-    {
       "name": "eslint-import-resolver-typescript",
       "type": "build"
     },
@@ -96,27 +76,7 @@
       "type": "build"
     },
     {
-      "name": "rollup",
-      "type": "build"
-    },
-    {
-      "name": "rollup-plugin-dts",
-      "type": "build"
-    },
-    {
-      "name": "rollup-plugin-peer-deps-external",
-      "type": "build"
-    },
-    {
-      "name": "rollup-plugin-postcss",
-      "type": "build"
-    },
-    {
       "name": "ts-node",
-      "type": "build"
-    },
-    {
-      "name": "tslib",
       "type": "build"
     },
     {
