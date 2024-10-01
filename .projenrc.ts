@@ -23,7 +23,7 @@ const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: '@hasanthika/react_npm',
   projenrcTs: true,
-  gitignore: ['.npmrc', '.idea'],
+  gitignore: ['.idea'],
   description: 'React Plugin Setup',
   devDeps: [...devDependencies()],
   repository: 'https://github.com/hasanthikaaa/react-plugin.git',
