@@ -1,7 +1,6 @@
 import { JsonFile, web } from 'projen';
 import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
-import { Publisher } from 'projen/lib/release';
 
 const devDependencies = () => [
   '@rollup/plugin-commonjs',
@@ -22,7 +21,7 @@ const devDependencies = () => [
 
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: '@hasanthik/react_npm',
+  name: '@hasanthika/react_npm',
   projenrcTs: true,
   gitignore: ['.idea', '.npmrc'],
   description: 'React Plugin Setup',
@@ -30,24 +29,15 @@ const project = new web.ReactTypeScriptProject({
   repository: 'https://github.com/hasanthikaaa/react-plugin.git',
   disableTsconfig: true,
   release: true,
-  releaseWorkflowName: 'react_npm_workflow',
+  releaseToNpm: true,
+  releaseFailureIssue: true,
+  npmRegistryUrl: 'https://npm.pkg.github.com',
   githubOptions: {
     workflows: true,
     projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: 'PROJEN_TOKEN' }),
   },
-  package: true,
 });
 
-const publisher = new Publisher(project, {
-  workflowRunsOn: ['react_npm_workflow'],
-  buildJobId: 'build',
-  artifactName: 'dist',
-});
-
-publisher.publishToNpm({
-  registry: 'npm.pkg.github.com',
-  npmTokenSecret: '${{ secrets.NPM_TOKEN }}',
-});
 
 project.bundler.addBundle('src/index.ts', {
   target: 'esnext',
@@ -56,9 +46,6 @@ project.bundler.addBundle('src/index.ts', {
   sourcemap: true,
 });
 
-project.addTask('bump-version', {
-  exec: 'npm version patch',
-});
 
 project.prettier?.addOverride({
   files: '*.ts',
