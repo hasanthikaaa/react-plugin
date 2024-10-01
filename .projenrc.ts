@@ -96,12 +96,12 @@ const addPackageJsonFile = {
 
 const commitPackageJsonFile = {
   name: 'Commit package.json',
-  run: 'git commit -m "ci: bump version"',
+  run: 'git diff --quiet package.json || git commit -m "ci: bump version"',
 };
 
 const pushPackageJsonfile = {
   name: 'Push package.json',
-  run: 'git push origin main',
+  run: 'git diff --quiet package.json || git push origin main',
 };
 
 const releaseWorkflow = project.tryFindObjectFile(

@@ -35,9 +35,9 @@ jobs:
       - name: Add package.json
         run: git add package.json
       - name: Commit package.json
-        run: 'git commit -m "ci: bump version"'
+        run: 'git diff --quiet package.json || git commit -m "ci: bump version"'
       - name: Push package.json
-        run: git push origin main
+        run: git diff --quiet package.json || git push origin main
       - name: release
         run: npx projen release
       - name: Check if version has already been tagged
