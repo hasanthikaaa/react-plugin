@@ -1,4 +1,4 @@
-import { JsonFile, JsonPatch, TextFile, web } from 'projen';
+import { JsonFile, JsonPatch, web } from 'projen';
 import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
 
@@ -14,6 +14,9 @@ const devDependencies = () => [
   'rollup-plugin-postcss',
   'tslib',
   'typescript',
+  '@testing-library/react',
+  '@testing-library/jest-dom',
+  '@testing-library/dom',
 ];
 
 const project = new web.ReactTypeScriptProject({
@@ -33,6 +36,14 @@ const project = new web.ReactTypeScriptProject({
   },
 });
 
+
+project.bundler.addBundle('src/index.ts', {
+  target: 'esnext',
+  platform: 'browser',
+  externals: ['react', 'react-dom'],
+  sourcemap: true,
+});
+
 project.addTask('bump-version', {
   exec: 'npm version patch',
 });
@@ -46,61 +57,6 @@ project.prettier?.addOverride({
     trailingComma: TrailingComma.ES5,
     printWidth: 80,
   },
-});
-
-project.addTask('rollup', {
-  exec: 'rollup -c --bundleConfigAsCjs',
-});
-
-project.package.addField('main', 'dist/index.js');
-project.package.addField('module', 'dist/index.mjs');
-project.package.addField('types', 'dist/index.d.ts');
-
-new TextFile(project, 'rollup.config.js', {
-  lines: [
-    `import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import dts from "rollup-plugin-dts";
-import terser from "@rollup/plugin-terser";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
-
-const packageJson = require("./package.json");
-
-export default [
-  {
-    input: "src/index.ts",
-    output: [
-      {
-        file: packageJson.main,
-        format: "cjs",
-        sourcemap: true,
-      },
-      {
-        file: packageJson.module,
-        format: "esm",
-        sourcemap: true,
-      },
-    ],
-    plugins: [
-      peerDepsExternal(),
-      resolve(),
-      commonjs(),
-      typescript({ tsconfig: "./tsconfig.json" }),
-      terser(),
-      postcss(),
-    ],
-    external: ["react", "react-dom"],
-  },
-  {
-    input: "src/index.ts",
-    output: [{ file: packageJson.types }],
-    plugins: [dts.default()],
-    external: [/\\.css$/],
-  },
-];`,
-  ],
 });
 
 new JsonFile(project, 'tsconfig.json', {

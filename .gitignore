@@ -46,6 +46,6 @@ jspm_packages/
 /dist/
 !/.eslintrc.json
 /build/
-!/rollup.config.js
+/assets/
 !/tsconfig.json
 !/.projenrc.ts

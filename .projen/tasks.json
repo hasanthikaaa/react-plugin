@@ -50,6 +50,33 @@
         }
       ]
     },
+    "bundle": {
+      "name": "bundle",
+      "description": "Prepare assets",
+      "steps": [
+        {
+          "spawn": "bundle:index"
+        }
+      ]
+    },
+    "bundle:index": {
+      "name": "bundle:index",
+      "description": "Create a JavaScript bundle from src/index.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/index.ts --target=\"esnext\" --platform=\"browser\" --outfile=\"assets/index/index.js\" --external:react --external:react-dom --sourcemap"
+        }
+      ]
+    },
+    "bundle:index:watch": {
+      "name": "bundle:index:watch",
+      "description": "Continuously update the JavaScript bundle from src/index.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/index.ts --target=\"esnext\" --platform=\"browser\" --outfile=\"assets/index/index.js\" --external:react --external:react-dom --sourcemap --watch"
+        }
+      ]
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -171,7 +198,12 @@
     },
     "pre-compile": {
       "name": "pre-compile",
-      "description": "Prepare the project for compilation"
+      "description": "Prepare the project for compilation",
+      "steps": [
+        {
+          "spawn": "bundle"
+        }
+      ]
     },
     "release": {
       "name": "release",
@@ -194,14 +226,6 @@
         },
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
-        }
-      ]
-    },
-    "rollup": {
-      "name": "rollup",
-      "steps": [
-        {
-          "exec": "rollup -c --bundleConfigAsCjs"
         }
       ]
     },
@@ -242,13 +266,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@rollup/plugin-commonjs,@rollup/plugin-node-resolve,@rollup/plugin-terser,@rollup/plugin-typescript,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,rollup,rollup-plugin-dts,rollup-plugin-peer-deps-external,rollup-plugin-postcss,ts-node,tslib,react,react-dom,web-vitals"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@rollup/plugin-commonjs,@rollup/plugin-node-resolve,@rollup/plugin-terser,@rollup/plugin-typescript,@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,projen,rollup,rollup-plugin-dts,rollup-plugin-peer-deps-external,rollup-plugin-postcss,ts-node,tslib,react,react-dom,web-vitals"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-terser @rollup/plugin-typescript @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts rollup rollup-plugin-dts rollup-plugin-peer-deps-external rollup-plugin-postcss ts-node tslib typescript react react-dom web-vitals"
+          "exec": "yarn upgrade @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-terser @rollup/plugin-typescript @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs esbuild eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts rollup rollup-plugin-dts rollup-plugin-peer-deps-external rollup-plugin-postcss ts-node tslib typescript react react-dom web-vitals"
         },
         {
           "exec": "npx projen"

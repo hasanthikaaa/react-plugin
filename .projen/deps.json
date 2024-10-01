@@ -17,6 +17,10 @@
       "type": "build"
     },
     {
+      "name": "@testing-library/dom",
+      "type": "build"
+    },
+    {
       "name": "@testing-library/jest-dom",
       "type": "build"
     },
@@ -63,6 +67,10 @@
     {
       "name": "constructs",
       "version": "^10.0.0",
+      "type": "build"
+    },
+    {
+      "name": "esbuild",
       "type": "build"
     },
     {
