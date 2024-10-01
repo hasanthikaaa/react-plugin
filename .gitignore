@@ -46,6 +46,5 @@ jspm_packages/
 /dist/
 !/.eslintrc.json
 /build/
-/assets/
 !/tsconfig.json
 !/.projenrc.ts

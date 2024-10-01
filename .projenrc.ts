@@ -1,18 +1,7 @@
 import { JsonFile, web } from 'projen';
-import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
 
 const devDependencies = () => [
-  '@rollup/plugin-commonjs',
-  '@rollup/plugin-node-resolve',
-  '@rollup/plugin-terser',
-  '@rollup/plugin-typescript',
-  '@types/react',
-  'rollup',
-  'rollup-plugin-dts',
-  'rollup-plugin-peer-deps-external',
-  'rollup-plugin-postcss',
-  'tslib',
   'typescript',
   '@testing-library/react',
   '@testing-library/jest-dom',
@@ -32,20 +21,7 @@ const project = new web.ReactTypeScriptProject({
   releaseToNpm: true,
   releaseFailureIssue: true,
   npmRegistryUrl: 'https://npm.pkg.github.com',
-  githubOptions: {
-    workflows: true,
-    projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: 'PROJEN_TOKEN' }),
-  },
 });
-
-
-project.bundler.addBundle('src/index.ts', {
-  target: 'esnext',
-  platform: 'browser',
-  externals: ['react', 'react-dom'],
-  sourcemap: true,
-});
-
 
 project.prettier?.addOverride({
   files: '*.ts',

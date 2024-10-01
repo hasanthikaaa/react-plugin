@@ -8,9 +8,6 @@
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
-    "bundle": "npx projen bundle",
-    "bundle:index": "npx projen bundle:index",
-    "bundle:index:watch": "npx projen bundle:index:watch",
     "clobber": "npx projen clobber",
     "compile": "npx projen compile",
     "default": "npx projen default",
@@ -29,10 +26,6 @@
     "projen": "npx projen"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.0",
-    "@rollup/plugin-node-resolve": "^15.3.0",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^12.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
@@ -45,18 +38,12 @@
     "@typescript-eslint/parser": "^7",
     "commit-and-tag-version": "^12",
     "constructs": "^10.0.0",
-    "esbuild": "^0.24.0",
     "eslint": "^8",
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.30.0",
     "projen": "^0.88.0",
     "react-scripts": "^5",
-    "rollup": "^4.22.5",
-    "rollup-plugin-dts": "^6.1.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
     "ts-node": "^10.9.2",
-    "tslib": "^2.7.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {

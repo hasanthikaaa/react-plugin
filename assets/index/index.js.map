@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/index.tsx"],
+  "sourcesContent": ["const MyButton = () => {\n  return (<div>\n    <h1>This is the update!</h1>\n    <h2>Latest</h2>\n    <button> Hello World</button>\n  </div>);\n};\n\n\nexport default MyButton;"],
+  "mappings": ";;;;;;;;;;AACU;AADV,MAAM,WAAW,MAAM;AACrB,WAAQ,6CAAC,SACP;AAAA,kDAAC,QAAG,iCAAmB;AAAA,MACvB,4CAAC,QAAG,oBAAM;AAAA,MACV,4CAAC,YAAO,0BAAY;AAAA,OACtB;AAAA,EACF;AAGA,MAAO,qBAAQ;",
+  "names": []
+}
