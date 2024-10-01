@@ -36,8 +36,6 @@ const project = new web.ReactTypeScriptProject({
   },
 });
 
-const packageJson = project.tryFindObjectFile('package.json');
-packageJson?.addOverride('version', '0.0.1');
 
 project.bundler.addBundle('src/index.ts', {
   target: 'esnext',
