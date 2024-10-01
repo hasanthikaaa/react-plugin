@@ -1,4 +1,4 @@
-import {JsonFile, JsonPatch, web} from 'projen';
+import { JsonFile, JsonPatch, web } from 'projen';
 import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
 
