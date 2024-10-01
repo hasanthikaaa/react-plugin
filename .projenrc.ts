@@ -3,7 +3,7 @@ const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'react-plugin',
   projenrcTs: true,
-  gitignore: ['.npmrc'],
+  gitignore: ['.npmrc', '.idea'],
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
