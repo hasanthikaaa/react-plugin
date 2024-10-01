@@ -84,22 +84,7 @@ new JsonFile(project, 'tsconfig.json', {
 
 const versionUpdateStep = {
   name: 'Bump version',
-  run: 'npm version patch -m "ci: bump version to %s"',
-};
-
-const addPackageJsonFile = {
-  name: 'Add package.json',
-  run: 'git add package.json',
-};
-
-const commitPackageJsonFile = {
-  name: 'Commit package.json',
-  run: 'git diff --quiet package.json || git commit -m "ci: bump version"',
-};
-
-const pushPackageJsonfile = {
-  name: 'Push package.json',
-  run: 'git diff --quiet package.json || git push origin main',
+  run: 'npm version patch',
 };
 
 const releaseWorkflow = project.tryFindObjectFile(
@@ -108,9 +93,6 @@ const releaseWorkflow = project.tryFindObjectFile(
 
 releaseWorkflow?.patch(
   JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
-  JsonPatch.add('/jobs/release/steps/4', addPackageJsonFile),
-  JsonPatch.add('/jobs/release/steps/5', commitPackageJsonFile),
-  JsonPatch.add('/jobs/release/steps/6', pushPackageJsonfile),
 );
 
 project.synth();
