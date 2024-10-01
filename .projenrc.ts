@@ -21,7 +21,7 @@ const devDependencies = () => [
 
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: '@hasanthika/react_npm',
+  name: '@hasanthik/react_npm',
   projenrcTs: true,
   gitignore: ['.idea', '.npmrc'],
   description: 'React Plugin Setup',
@@ -104,7 +104,7 @@ const releaseWorkflow = project.tryFindObjectFile(
   '.github/workflows/release.yml',
 );
 releaseWorkflow?.patch(
-  JsonPatch.add('/jobs/release/steps/1', privateNPMPackageAuthStep),
+  JsonPatch.add('/jobs/release_npm/steps/1', privateNPMPackageAuthStep),
 );
 
 //
