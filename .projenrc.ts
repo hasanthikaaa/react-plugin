@@ -109,7 +109,10 @@ const releaseWorkflow = project.tryFindObjectFile(
 );
 
 releaseWorkflow?.patch(
-  JsonPatch.add('/jobs/release/steps/3', [versionUpdateStep, addPackageJsonFile, commitPackageJsonFile, pushPackageJsonfile]),
+  JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
+  JsonPatch.add('/jobs/release/steps/4', addPackageJsonFile),
+  JsonPatch.add('/jobs/release/steps/5', commitPackageJsonFile),
+  JsonPatch.add('/jobs/release/steps/6', pushPackageJsonfile),
 );
 
 project.synth();
