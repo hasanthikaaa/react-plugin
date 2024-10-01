@@ -30,8 +30,8 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
-.npmrc
 .idea
+.npmrc
 !/.github/workflows/build.yml
 /dist/changelog.md
 /dist/version.txt
