@@ -1,6 +1,7 @@
-import { JsonFile, JsonPatch, web } from 'projen';
+import { JsonFile, web } from 'projen';
 import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
+import { Publisher } from 'projen/lib/release';
 
 const devDependencies = () => [
   '@rollup/plugin-commonjs',
@@ -29,7 +30,7 @@ const project = new web.ReactTypeScriptProject({
   repository: 'https://github.com/hasanthikaaa/react-plugin.git',
   disableTsconfig: true,
   release: true,
-  releaseToNpm: true,
+  releaseWorkflowName: 'react_npm_workflow',
   githubOptions: {
     workflows: true,
     projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: 'PROJEN_TOKEN' }),
@@ -37,6 +38,16 @@ const project = new web.ReactTypeScriptProject({
   package: true,
 });
 
+const publisher = new Publisher(project, {
+  workflowRunsOn: ['react_npm_workflow'],
+  buildJobId: 'build',
+  artifactName: 'dist',
+});
+
+publisher.publishToNpm({
+  registry: 'npm.pkg.github.com',
+  npmTokenSecret: '${{ secrets.NPM_TOKEN }}',
+});
 
 project.bundler.addBundle('src/index.ts', {
   target: 'esnext',
@@ -82,34 +93,5 @@ new JsonFile(project, 'tsconfig.json', {
     include: ['src'],
   },
 });
-
-// Enable private npm module install option
-const NPM_AUTH_TOKEN_SECRET = '${{ secrets.NPM_TOKEN }}';
-
-const privateNPMPackageAuthStep = {
-  name: 'Authenticate with private NPM package',
-  run: `echo "@hasanthikaaa:registry=https://npm.pkg.github.com/hasanthikaaa" > .npmrc
-echo "@hasanthikaaa:registry=https://npm.pkg.github.com" >> .npmrc
-echo "//npm.pkg.github.com/:_authToken=${NPM_AUTH_TOKEN_SECRET}" >> .npmrc
-echo "registry=https://registry.npmjs.org" >> .npmrc
-cat .npmrc`,
-};
-
-// const versionUpdateStep = {
-//   name: 'Bump version',
-//   run: 'npm version patch',
-// };
-//
-const releaseWorkflow = project.tryFindObjectFile(
-  '.github/workflows/release.yml',
-);
-releaseWorkflow?.patch(
-  JsonPatch.add('/jobs/release_npm/steps/1', privateNPMPackageAuthStep),
-);
-
-//
-// releaseWorkflow?.patch(
-//   JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
-// );
 
 project.synth();
