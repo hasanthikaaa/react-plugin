@@ -1,4 +1,4 @@
-import { JsonFile, web } from 'projen';
+import {JsonFile, JsonPatch, web} from 'projen';
 import { GithubCredentials } from 'projen/lib/github';
 import { TrailingComma } from 'projen/lib/javascript';
 
@@ -23,7 +23,7 @@ const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: '@hasanthika/react_npm',
   projenrcTs: true,
-  gitignore: ['.idea'],
+  gitignore: ['.idea', '.npmrc'],
   description: 'React Plugin Setup',
   devDeps: [...devDependencies()],
   repository: 'https://github.com/hasanthikaaa/react-plugin.git',
@@ -83,14 +83,30 @@ new JsonFile(project, 'tsconfig.json', {
   },
 });
 
+// Enable private npm module install option
+const NPM_AUTH_TOKEN_SECRET = '${{ secrets.NPM_TOKEN }}';
+
+const privateNPMPackageAuthStep = {
+  name: 'Authenticate with private NPM package',
+  run: `echo "@hasanthikaaa:registry=https://npm.pkg.github.com/hasanthikaaa" > .npmrc
+echo "@hasanthikaaa:registry=https://npm.pkg.github.com" >> .npmrc
+echo "//npm.pkg.github.com/:_authToken=${NPM_AUTH_TOKEN_SECRET}" >> .npmrc
+echo "registry=https://registry.npmjs.org" >> .npmrc
+cat .npmrc`,
+};
+
 // const versionUpdateStep = {
 //   name: 'Bump version',
 //   run: 'npm version patch',
 // };
 //
-// const releaseWorkflow = project.tryFindObjectFile(
-//   '.github/workflows/release.yml',
-// );
+const releaseWorkflow = project.tryFindObjectFile(
+  '.github/workflows/release.yml',
+);
+releaseWorkflow?.patch(
+  JsonPatch.add('/jobs/release/steps/1', privateNPMPackageAuthStep),
+);
+
 //
 // releaseWorkflow?.patch(
 //   JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
