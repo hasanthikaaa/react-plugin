@@ -21,7 +21,7 @@ const devDependencies = () => [
 
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: '@hasanthika/react_npm',
+  name: '@hasanthikaaa/react_npm',
   projenrcTs: true,
   gitignore: ['.idea', '.npmrc'],
   description: 'React Plugin Setup',
