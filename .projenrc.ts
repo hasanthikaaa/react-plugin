@@ -1,4 +1,6 @@
-import { JsonFile, TextFile, web } from 'projen';
+import { JsonFile, JsonPatch, TextFile, web } from 'projen';
+import { GithubCredentials } from 'projen/lib/github';
+import { TrailingComma } from 'projen/lib/javascript';
 
 const devDependencies = () => [
   '@rollup/plugin-commonjs',
@@ -23,6 +25,27 @@ const project = new web.ReactTypeScriptProject({
   devDeps: [...devDependencies()],
   repository: 'https://github.com/hasanthikaaa/react-plugin.git',
   disableTsconfig: true,
+  release: true,
+  releaseToNpm: true,
+  githubOptions: {
+    workflows: true,
+    projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: 'PROJEN_TOKEN' }),
+  },
+});
+
+project.addTask('bump-version', {
+  exec: 'npm version patch',
+});
+
+project.prettier?.addOverride({
+  files: '*.ts',
+  options: {
+    singleQuote: true,
+    semi: false,
+    tabWidth: 2,
+    trailingComma: TrailingComma.ES5,
+    printWidth: 80,
+  },
 });
 
 project.addTask('rollup', {
@@ -103,5 +126,17 @@ new JsonFile(project, 'tsconfig.json', {
   },
 });
 
+const versionUpdateStep = {
+  name: 'Bump version',
+  run: 'npm version patch -m "ci: bump version to %s"',
+};
+
+const releaseWorkflow = project.tryFindObjectFile(
+  '.github/workflows/release.yml',
+);
+
+releaseWorkflow?.patch(
+  JsonPatch.add('/jobs/release/steps/3', versionUpdateStep),
+);
 
 project.synth();
