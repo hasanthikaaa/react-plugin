@@ -31,13 +31,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Bump version
-        run: 'npm version patch -m "ci: bump version to %s"'
-      - name: Add package.json
-        run: git add package.json
-      - name: Commit package.json
-        run: 'git diff --quiet package.json || git commit -m "ci: bump version"'
-      - name: Push package.json
-        run: git diff --quiet package.json || git push origin main
+        run: npm version patch
       - name: release
         run: npx projen release
       - name: Check if version has already been tagged
